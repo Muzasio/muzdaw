@@ -26,7 +26,22 @@ from .model import Channel, Project, ProjectError
 BLOCK = 512
 TAIL_SEC = 2.0   # room for release / reverb after the last note
 PRE_SEC = 0.25   # pre-roll: plugins (e.g. Surge) load patches in the first block and drop notes there
-SOUNDFONT = Path("/usr/share/soundfonts/FluidR3_GM.sf2")
+
+
+def find_soundfont() -> Path:
+    """General MIDI soundfont: $MUZDAW_SOUNDFONT, else the usual places (Arch/Fedora, Debian/Ubuntu)."""
+    import os
+    env = os.environ.get("MUZDAW_SOUNDFONT")
+    candidates = [Path(env).expanduser()] if env else []
+    candidates += [Path("/usr/share/soundfonts/FluidR3_GM.sf2"), Path("/usr/share/sounds/sf2/FluidR3_GM.sf2"),
+                   Path("/usr/share/soundfonts/default.sf2"), Path("/usr/share/sounds/sf2/default-GM.sf2")]
+    for c in candidates:
+        if c.is_file():
+            return c
+    return candidates[0]
+
+
+SOUNDFONT = find_soundfont()
 
 
 @dataclass

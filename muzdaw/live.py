@@ -33,7 +33,7 @@ from .plugin_state import find_surge_patch, surge_fxp_to_state
 CARLA_PY = Path("/usr/share/carla")
 CARLA_LIB = Path("/usr/lib/carla/libcarla_standalone2.so")
 CARLA_BIN = Path("/usr/lib/carla")
-SOUNDFONT = Path("/usr/share/soundfonts/FluidR3_GM.sf2")
+from .render import SOUNDFONT  # noqa: E402  (same soundfont search as the export)
 SURGE = Path("/usr/lib/vst3/Surge XT.vst3")
 LSP_LV2 = Path("/usr/lib/lv2/lsp-plugins.lv2")
 LSP = "http://lsp-plug.in/plugins/lv2/"
