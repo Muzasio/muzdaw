@@ -100,11 +100,12 @@ Press **F1** in the window for the full guide.
 
 **5. Audio to notes (optional)**
 
-basic-pitch needs Python 3.12, so it gets its own small environment ([uv](https://docs.astral.sh/uv/) makes that easy):
+basic-pitch needs Python 3.12, so it gets its own small environment ([uv](https://docs.astral.sh/uv/) makes that easy). Its helpers are installed first and basic-pitch itself without dependencies, because its package asks for TensorFlow, which has no build for Python 3.12 (muzdaw uses the lighter ONNX runtime instead):
 
 ```sh
 uv venv -p 3.12 .venv-pitch
-uv pip install --python .venv-pitch/bin/python "basic-pitch[onnx]"
+uv pip install --python .venv-pitch/bin/python librosa mir-eval pretty-midi "resampy<0.4.3" scikit-learn scipy onnxruntime "setuptools<81"
+uv pip install --python .venv-pitch/bin/python --no-deps basic-pitch==0.4.0
 ```
 
 **6. App menu entry (optional)**
