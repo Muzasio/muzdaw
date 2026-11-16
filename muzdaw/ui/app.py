@@ -572,10 +572,32 @@ class MainWindow(QMainWindow):
         super().closeEvent(e)
 
 
+def app_icon():
+    """muzdaw icon (muzdaw/ui/icon.svg) drawn at the usual sizes, for windows and the taskbar."""
+    from PySide6.QtCore import QRectF
+    from PySide6.QtGui import QIcon, QImage, QPainter, QPixmap
+    from PySide6.QtSvg import QSvgRenderer
+    r = QSvgRenderer(str(Path(__file__).with_name("icon.svg")))
+    icon = QIcon()
+    if not r.isValid():
+        return icon
+    for size in (16, 24, 32, 48, 64, 128, 256):
+        img = QImage(size, size, QImage.Format.Format_ARGB32_Premultiplied)
+        img.fill(0)
+        p = QPainter(img)
+        p.setRenderHint(QPainter.RenderHint.Antialiasing)
+        r.render(p, QRectF(0, 0, size, size))
+        p.end()
+        icon.addPixmap(QPixmap.fromImage(img))
+    return icon
+
+
 def main(argv: list[str] | None = None) -> int:
     argv = sys.argv if argv is None else argv
     app = QApplication.instance() or QApplication(argv)
     app.setApplicationName("muzdaw")
+    app.setDesktopFileName("muzdaw")  # matches a muzdaw.desktop menu entry (Wayland taskbar icon)
+    app.setWindowIcon(app_icon())
     dark_theme(app)
     if len(argv) > 1:
         path = Path(argv[1])

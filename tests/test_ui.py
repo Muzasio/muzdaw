@@ -433,3 +433,11 @@ def test_channel_delete_and_rename(win, song, app):
     assert [r.name for r in win.rack._row_widgets] == ["kick"]
     QTest.keyClick(win, Qt.Key.Key_Z, Qt.KeyboardModifier.ControlModifier)
     assert [c.name for c in load(song).channels] == ["lead", "kick"]
+
+
+def test_app_icon_has_all_sizes(app):
+    from muzdaw.ui.app import app_icon
+    icon = app_icon()
+    assert not icon.isNull()
+    sizes = {s.width() for s in icon.availableSizes()}
+    assert {16, 32, 48, 256} <= sizes

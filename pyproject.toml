@@ -31,4 +31,4 @@ muzdaw-ui = "muzdaw.ui.app:main"
 packages = ["muzdaw", "muzdaw.ui"]
 
 [tool.setuptools.package-data]
-"muzdaw.ui" = ["help.md"]
+"muzdaw.ui" = ["help.md", "icon.svg"]
