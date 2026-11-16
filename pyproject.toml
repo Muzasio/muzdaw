@@ -1,0 +1,34 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "muzdaw"
+version = "0.1.0"
+description = "Fast DAW you drive from the command line: DawDreamer render, pedalboard effects, Carla live."
+requires-python = ">=3.11"
+dependencies = [
+    "dawdreamer>=0.9.0",
+    "pedalboard>=0.9.26",
+    "mido>=1.3",
+    "python-rtmidi>=1.5",
+    "sounddevice>=0.4",
+    "numpy",
+    "scipy",
+]
+
+[project.optional-dependencies]
+test = ["pytest"]
+ui = ["PySide6>=6.8"]
+
+[project.scripts]
+muzdaw = "muzdaw.cli:main"
+
+[project.gui-scripts]
+muzdaw-ui = "muzdaw.ui.app:main"
+
+[tool.setuptools]
+packages = ["muzdaw", "muzdaw.ui"]
+
+[tool.setuptools.package-data]
+"muzdaw.ui" = ["help.md"]

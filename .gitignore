@@ -1,0 +1,15 @@
+.venv/
+.venv-pitch/
+__pycache__/
+*.pyc
+.pytest_cache/
+spikes/out/
+*.wav
+*.mp3
+/docs/*
+!/docs/images/
+*.history.json
+*.egg-info/
+build/
+*.muz.json
+*.history.d/
